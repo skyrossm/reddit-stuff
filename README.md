@@ -1,2 +1,2 @@
 # reddit-stuff
-mirrorbot and sidebar updater
+Very dirty python implementation of a mirrorbot and sidebar updater.
