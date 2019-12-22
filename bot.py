@@ -28,32 +28,21 @@ Credit to {2} for the content.
 
 #@retry(wait_fixed=600000, stop_max_attempt_number=6)
 def main():
-    global cur
-    global sql
-    sql = sqlite3.connect('replyposts.db')
-    print('Loaded SQL Database')
-    cur = sql.cursor()
-
-    cur.execute('CREATE TABLE IF NOT EXISTS oldsubmissions(ID TEXT)')
-    cur.execute('CREATE INDEX IF NOT EXISTS oldsubmissions_index ON oldsubmissions(id)')
-    print('Loaded Completed table')
-    
-
-    sql.commit()
-    
+    print('Loaded App')
     print('logging in....')
     reddit = praw.Reddit(client_id=os.environ['REDDIT_CLIENTID'],
                          client_secret=os.environ['REDDIT_CLIENTSECRET'],
                          password=os.environ['REDDIT_PASSWORD'],
                          user_agent='mirrorbot V1.1 by /u/powerjaxx and /u/skyrossm',
                          username=os.environ['REDDIT_USERNAME'])
-
     print('retreiving subreddit....')
     subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
     while True:
-        for submission in subreddit.stream.submissions():
+        for submission in subreddit.stream.submissions(skip_existing=True):
+            print('Processing submission...')
             process_submission(submission)
-        time.sleep(60)
+        #try to start stream every hour just in case.
+        time.sleep(3600)
 
 def streamable(clip_url, submission):
     api_url = 'https://api.streamable.com/import'
@@ -94,15 +83,11 @@ def clipinfo(clip_url):
 def process_submission(submission):
     clip_url = submission.url
     sid = submission.id
-    print(submission.archived)
-    cur.execute('SELECT * FROM oldsubmissions WHERE ID=?', [sid])
-    if (not submission.archived) and (cur.fetchone() is None):
+    if not submission.archived:
         if clip_url.startswith('https://clips.twitch.tv'):
             streamable(clip_url, submission)
-            cur.execute('INSERT INTO oldsubmissions VALUES(?)', [sid])
-            sql.commit()
-            print('Added id {0} to database'.format(sid))
-            #not really needed
+            print('Replied to {0}'.format(sid))
+            #prevent rate limiting (>1 request per second)
             time.sleep(5)
     else:
         pass
