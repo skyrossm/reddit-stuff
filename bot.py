@@ -5,6 +5,7 @@ import praw
 import requests
 from retrying import retry
 import raven
+import os
 
 client = raven.Client(
     dsn='',
