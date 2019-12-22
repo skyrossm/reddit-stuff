@@ -3,6 +3,7 @@ import requests
 import raven
 import praw
 import re
+import time
 from datetime import datetime
 
 client = raven.Client(
@@ -12,17 +13,17 @@ client = raven.Client(
 )
 
 api_url = 'https://api.twitch.tv/kraken/streams'
-headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': ''}
+headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': os.environ['TWITCH_CLIENTID']}
 
 #login to reddit.
-reddit = praw.Reddit(client_id='',
-                        client_secret='',
-                        password='',
-                        user_agent='streamer-update V1.0.0 fby /u/powerjaxx',
-                        username='')
+reddit = praw.Reddit(client_id=os.environ['REDDIT_CLIENTID'],
+                     client_secret=os.environ['REDDIT_CLIENTSECRET'],
+                     password=os.environ['REDDIT_PASSWORD'],
+                     user_agent='mirrorbot V1.1 by /u/powerjaxx and /u/skyrossm',
+                     username=os.environ['REDDIT_USERNAME'])
 
 #define subreddit
-subreddit = reddit.subreddit('')
+subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
 
 #get subreddits settings
 settings = subreddit.mod.settings()
@@ -55,7 +56,7 @@ print(viewer_count)
 def get_name(ids):
     global names
     api_url = 'https://api.twitch.tv/helix/users'
-    headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': ''}
+    headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': os.environ['TWITCH_CLIENTID']}
     payload = {'id': ids}
     r = requests.get(api_url, headers=headers, params=payload)
     data = r.json()
@@ -65,56 +66,6 @@ def get_name(ids):
 #get_name(ids)
 
 sidebar = '''
--
-**Emotes usage guide [](#LUL)**
----
-
-1. Turn subreddit style on.
-
-2. Use this example in your comment.
-
-----------
-
-    [](#LUL)
-or
-
-    [LUL](#LUL)
-
-If you want people without the subreddit style turned on to see it
-
-
-#### [Full list of emotes here](https://www.reddit.com/r/rpclipsgta/wiki/meta/emotes)
-
---------------------------------
-
-[](https://discord.gg/bkVuuXF)
-
---------------------------------
-
-
-
-**RULES:**
----
-
-1. Do not organize attacks on streamers through the sub-reddit. 
-
-2. No personal attacks against each other.
-
-3. No repost. Search before posting one if you are unsure.
-
-4. Non-GTAVRP content is not allowed.
-
-5. No NSFW images or videos.
-
-6. No racist, sexist, or hate speech.
-
-
-
-
-
--------------------------------------------------------------
-**Top GTA RP Streamers live**
----
 Streamer | Viewer Count
 ---|---
 [{0}](https://www.twitch.tv/{0}) |{11}
@@ -129,19 +80,25 @@ Streamer | Viewer Count
 [{9}](https://www.twitch.tv/{9}) |{20}
 ^(Last updated {10} (UTC)^)
 
--------------------------------------------------------------
 
 '''.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], names[9], datetime.utcnow().replace(microsecond=0), viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8], viewer_count[9])
 
 
 
 def update_sidebar(names, settings):
-    sidebar_contents = settings['description']
-    subreddit.mod.update(description=sidebar)
+    custom = None
+    widgets = subreddit.widgets
+    for widget in widgets.sidebar:
+        if isinstance(widget, praw.models.CustomWidget):
+            custom = widget
+            break
+    custom.mod.update(text=sidebar)
 
 
-
-update_sidebar(names, settings)
+while True:
+    update_sidebar(names, settings)
+    print("Updated widget")
+    time.sleep(60)
 
     
 
