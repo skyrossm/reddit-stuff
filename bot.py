@@ -22,7 +22,8 @@ reply_template = '''
 
 
 Credit to {2} for the content.
-[Continue watching]({3})
+
+{3}
 
 -----------------------------
 ^(I am a bot. Beep Boop)
@@ -78,7 +79,13 @@ def clipinfo(clip_url):
     json = r.json()
     broadcaster_url = json["broadcaster"]["channel_url"]
     title_clip = json["title"]
-    vod_link = json["vod"]["url"]
+    if 'vod' in json:
+        if 'url' in json:
+                vod_link = '[Continue watching](' + json["vod"]["url"] + ')'
+        else:
+            vod_link = ''
+    else:
+        vod_link = ''
 
 
 
