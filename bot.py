@@ -51,8 +51,8 @@ def main():
     print('retreiving subreddit....')
     subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
     while true:
-    	for submission in subreddit.stream.submissions():
-        	process_submission(submission)
+        for submission in subreddit.stream.submissions():
+            process_submission(submission)
         time.sleep(60000)
 
 def streamable(clip_url, submission):
