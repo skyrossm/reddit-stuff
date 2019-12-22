@@ -64,7 +64,7 @@ def fetch_names():
     #gets the viewercounts of the people that certain words in their title
     viewer_count = [x['viewers'] for x in data['streams'] if any(s in x['channel'].get('status', '').lower() for s in ['nopixel', 'rp', 'roleplay', 'family', 'No Pixel']) and x['broadcast_platform']=='live']
     print(viewer_count)
-    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], names[9], datetime.utcnow().replace(microsecond=0), viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8], viewer_count[9])
+    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], names[9], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8], viewer_count[9])
 
 
 def get_name(ids):
