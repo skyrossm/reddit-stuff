@@ -5,6 +5,7 @@ import praw
 import re
 import time
 from datetime import datetime
+import os
 
 client = raven.Client(
     dsn='',
