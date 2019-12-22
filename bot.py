@@ -81,7 +81,7 @@ def clipinfo(clip_url):
     title_clip = json["title"]
     try:
          vod_link = '[Continue watching](' + json["vod"]["url"] + ')'
-    except KeyError:
+    except TypeError:
         print("No vod link")
         vod_link = ''
 
