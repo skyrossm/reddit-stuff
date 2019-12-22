@@ -6,6 +6,7 @@ import requests
 from retrying import retry
 import raven
 import os
+import re
 
 client = raven.Client(
     dsn='',
@@ -23,7 +24,7 @@ reply_template = '''
 Credit to {2} for the content.
 
 -----------------------------
-^(I am a bot. Beep Boop|) [^feedback](https://discord.gg/N8AN9NW)
+^(I am a bot. Beep Boop)
 ''' 
 
 #@retry(wait_fixed=600000, stop_max_attempt_number=6)
@@ -86,9 +87,14 @@ def process_submission(submission):
     if not submission.archived:
         if clip_url.startswith('https://clips.twitch.tv'):
             streamable(clip_url, submission)
-            print('Replied to {0}'.format(sid))
-            #prevent rate limiting (>1 request per second)
-            time.sleep(5)
+        else if re.match('https://twitch.tv/*/clip/*', clip_url):
+            new_url = 'https://clips.twitch.tv/' + clip_url.split("clip/")[1]
+            print("Fixed broken twitch url");
+            #Could also configure to auto remove post
+            streamable(new_url, submission)
+        print('Replied to {0}'.format(sid))
+         #prevent rate limiting (>1 request per second)
+        time.sleep(5)
     else:
         pass
 
