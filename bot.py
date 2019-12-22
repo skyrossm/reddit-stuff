@@ -94,7 +94,7 @@ def process_submission(submission):
     sid = submission.id
     print(submission.archived)
     cur.execute('SELECT * FROM oldsubmissions WHERE ID=?', [sid])
-    if not submission.archived or cur.fetchone() is None:
+    if (not submission.archived) and (cur.fetchone() is None):
         if clip_url.startswith('https://clips.twitch.tv'):
             streamable(clip_url, submission)
             cur.execute('INSERT INTO oldsubmissions VALUES(?)', [sid])
