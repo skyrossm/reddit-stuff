@@ -87,7 +87,7 @@ def process_submission(submission):
     if not submission.archived:
         if clip_url.startswith('https://clips.twitch.tv'):
             streamable(clip_url, submission)
-        elif re.match('https://twitch.tv/*/clip/*', clip_url):
+        elif re.match('https://www.twitch.tv/.*/clip/.*', clip_url):
             new_url = 'https://clips.twitch.tv/' + clip_url.split("clip/")[1]
             print("Fixed broken twitch url");
             #Could also configure to auto remove post
