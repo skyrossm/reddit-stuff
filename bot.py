@@ -14,6 +14,8 @@ client = raven.Client(
 )
 
 
+print("Beep boop!")
+
 reply_template = '''
 [MIRROR: {0}](https://streamable.com/{1})
 
