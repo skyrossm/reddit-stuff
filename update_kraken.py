@@ -29,7 +29,21 @@ subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
 #get subreddits settings
 settings = subreddit.mod.settings()
 
-global sidebar
+sidebar = '''
+    Streamer | Viewer Count
+    ---|---
+    [{0}](https://www.twitch.tv/{0}) |{11}
+    [{1}](https://www.twitch.tv/{1}) |{12}
+    [{2}](https://www.twitch.tv/{2}) |{13}
+    [{3}](https://www.twitch.tv/{3}) |{14}
+    [{4}](https://www.twitch.tv/{4}) |{15}
+    [{5}](https://www.twitch.tv/{5}) |{16}
+    [{6}](https://www.twitch.tv/{6}) |{17}
+    [{7}](https://www.twitch.tv/{7}) |{18}
+    [{8}](https://www.twitch.tv/{8}) |{19}
+    [{9}](https://www.twitch.tv/{9}) |{20}
+    ^(Last updated {10} (UTC)^)
+    '''
 
 def fetch_names():
     #payload for api request
@@ -51,24 +65,7 @@ def fetch_names():
     #gets the viewercounts of the people that certain words in their title
     viewer_count = [x['viewers'] for x in data['streams'] if any(s in x['channel'].get('status', '').lower() for s in ['nopixel', 'rp', 'roleplay', 'family', 'No Pixel']) and x['broadcast_platform']=='live']
     print(viewer_count)
-    sidebar = '''
-    Streamer | Viewer Count
-    ---|---
-    [{0}](https://www.twitch.tv/{0}) |{11}
-    [{1}](https://www.twitch.tv/{1}) |{12}
-    [{2}](https://www.twitch.tv/{2}) |{13}
-    [{3}](https://www.twitch.tv/{3}) |{14}
-    [{4}](https://www.twitch.tv/{4}) |{15}
-    [{5}](https://www.twitch.tv/{5}) |{16}
-    [{6}](https://www.twitch.tv/{6}) |{17}
-    [{7}](https://www.twitch.tv/{7}) |{18}
-    [{8}](https://www.twitch.tv/{8}) |{19}
-    [{9}](https://www.twitch.tv/{9}) |{20}
-    ^(Last updated {10} (UTC)^)
-
-
-    '''.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], names[9], datetime.utcnow().replace(microsecond=0), viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8], viewer_count[9])
-
+    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], names[9], datetime.utcnow().replace(microsecond=0), viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8], viewer_count[9])
 
 
 def get_name(ids):
@@ -84,19 +81,19 @@ def get_name(ids):
 #get_name(ids)
 
 
-def update_sidebar():
+def update_sidebar(updateText):
     custom = None
     widgets = subreddit.widgets
     for widget in widgets.sidebar:
         if isinstance(widget, praw.models.CustomWidget):
-            custom = widget
-            break
-    custom.mod.update(text=sidebar)
+            if widget.shortName == "TOP GTA STREAMERS"
+                custom = widget
+                break
+    custom.mod.update(text=updateText)
 
 
 while True:
-    fetch_names()
-    update_sidebar()
+    update_sidebar(fetch_names())
     print("Updated widget")
     time.sleep(60)
 
