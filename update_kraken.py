@@ -94,7 +94,7 @@ def update_sidebar(updateText):
 while True:
     update_sidebar(fetch_names())
     print("Updated widget")
-    time.sleep(60)
+    time.sleep(300)
 
     
 
