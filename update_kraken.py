@@ -42,7 +42,6 @@ sidebar = '''
     [{7}](https://www.twitch.tv/{7}) |{18}
     [{8}](https://www.twitch.tv/{8}) |{19}
     [{9}](https://www.twitch.tv/{9}) |{20}
-    ^(Last updated {10} (UTC)^)
     '''
 
 def fetch_names():
