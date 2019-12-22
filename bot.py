@@ -92,6 +92,7 @@ def clipinfo(clip_url):
 def process_submission(submission):
     clip_url = submission.url
     sid = submission.id
+    print(submission.archived)
     cur.execute('SELECT * FROM oldsubmissions WHERE ID=?', [sid])
     if not submission.archived or cur.fetchone() is None:
         if clip_url.startswith('https://clips.twitch.tv'):
