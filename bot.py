@@ -74,7 +74,7 @@ def clipinfo(clip_url):
     global broadcaster_url
     global title_clip
     #global vod_link
-    headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': ''}
+    headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': os.environ['TWITCH_CLIENTID']}
     if clip_url.startswith('https://clips.twitch.tv'):
         url_end = clip_url[24:]
         print(url_end)
