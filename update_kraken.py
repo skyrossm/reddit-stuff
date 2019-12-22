@@ -86,7 +86,7 @@ def update_sidebar(updateText):
     widgets = subreddit.widgets
     for widget in widgets.sidebar:
         if isinstance(widget, praw.models.CustomWidget):
-            if widget.shortName == "TOP GTA STREAMERS"
+            if (widget.shortName == "TOP GTA STREAMERS"):
                 custom = widget
                 break
     custom.mod.update(text=updateText)
