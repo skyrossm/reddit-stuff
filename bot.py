@@ -7,7 +7,6 @@ from retrying import retry
 import raven
 from systemd import journal
 
-
 client = raven.Client(
     dsn='',
 
@@ -22,7 +21,7 @@ reply_template = '''
 Credit to {2} for the content.
 
 -----------------------------
-^(I am a bot. |) [^feedback](https://discord.gg/N8AN9NW)
+^(I am a bot. Beep Boop|) [^feedback](https://discord.gg/N8AN9NW)
 ''' 
 
 #@retry(wait_fixed=600000, stop_max_attempt_number=6)
@@ -43,15 +42,15 @@ def main():
     
     print('logging in....')
     journal.send('logging in', SYSLOG_IDENTIFIER='reddit-bot' )
-    reddit = praw.Reddit(client_id='',
-                         client_secret='',
-                         password='',
-                         user_agent='mirrorbot V1.0.1 by /u/powerjaxx',
-                         username='')
+    reddit = praw.Reddit(client_id=os.environ['REDDIT_CLIENTID'],
+                         client_secret=os.environ['REDDIT_CLIENTSECRET'],
+                         password=os.environ['REDDIT_PASSWORD'],
+                         user_agent='mirrorbot V1.1 by /u/powerjaxx and /u/skyrossm',
+                         username=os.environ['REDDIT_USERNAME'])
 
     print('retreiving subreddit....')
     journal.send('retreiving subreddit', SYSLOG_IDENTIFIER='reddit-bot' )
-    subreddit = reddit.subreddit('')
+    subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
     for submission in subreddit.stream.submissions():
         process_submission(submission)
 
@@ -60,7 +59,7 @@ def streamable(clip_url, submission):
     payload = {'url': clip_url}
     headers = {'User-Agent': 'A bot that creates mirrors of Twitch clips'}
     global shortcode
-    r = requests.get(api_url, params=payload, auth=('', ''), headers=headers)
+    r = requests.get(api_url, params=payload, auth=(os.environ['STREAMABLE_USER'], os.environ['STREAMABLE_PW']), headers=headers)
     print(r.status_code)
     if r.status_code == 200:
         json = r.json()
