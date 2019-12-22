@@ -22,6 +22,7 @@ reply_template = '''
 
 
 Credit to {2} for the content.
+[Continue watching]({3})
 
 -----------------------------
 ^(I am a bot. Beep Boop)
@@ -56,7 +57,7 @@ def streamable(clip_url, submission):
         json = r.json()
         shortcode = json['shortcode']
         clipinfo(clip_url)
-        reply_text = reply_template.format(title_clip, shortcode, broadcaster_url)
+        reply_text = reply_template.format(title_clip, shortcode, broadcaster_url, vod_link)
         reply = submission.reply(reply_text)
         reply.mod.distinguish(sticky=True)
     else:
@@ -65,7 +66,7 @@ def streamable(clip_url, submission):
 def clipinfo(clip_url):
     global broadcaster_url
     global title_clip
-    #global vod_link
+    global vod_link
     headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': os.environ['TWITCH_CLIENTID']}
     if clip_url.startswith('https://clips.twitch.tv'):
         url_end = clip_url[24:]
@@ -77,7 +78,7 @@ def clipinfo(clip_url):
     json = r.json()
     broadcaster_url = json["broadcaster"]["channel_url"]
     title_clip = json["title"]
-    #vod_link = json["vod"]["url"]
+    vod_link = json["vod"]["url"]
 
 
 
