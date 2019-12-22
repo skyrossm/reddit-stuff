@@ -50,7 +50,7 @@ def main():
 
     print('retreiving subreddit....')
     subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
-    while true:
+    while True:
         for submission in subreddit.stream.submissions():
             process_submission(submission)
         time.sleep(60000)
