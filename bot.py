@@ -53,7 +53,7 @@ def main():
     while True:
         for submission in subreddit.stream.submissions():
             process_submission(submission)
-        time.sleep(60000)
+        time.sleep(60)
 
 def streamable(clip_url, submission):
     api_url = 'https://api.streamable.com/import'
@@ -103,7 +103,7 @@ def process_submission(submission):
             sql.commit()
             print('Added id {0} to database'.format(sid))
             #not really needed
-            time.sleep(1000)
+            time.sleep(5)
     else:
         pass
 
