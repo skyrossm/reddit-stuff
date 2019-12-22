@@ -32,16 +32,16 @@ settings = subreddit.mod.settings()
 sidebar = '''
     Streamer | Viewer Count
     ---|---
-    [{0}](https://www.twitch.tv/{0}) |{11}
-    [{1}](https://www.twitch.tv/{1}) |{12}
-    [{2}](https://www.twitch.tv/{2}) |{13}
-    [{3}](https://www.twitch.tv/{3}) |{14}
-    [{4}](https://www.twitch.tv/{4}) |{15}
-    [{5}](https://www.twitch.tv/{5}) |{16}
-    [{6}](https://www.twitch.tv/{6}) |{17}
-    [{7}](https://www.twitch.tv/{7}) |{18}
-    [{8}](https://www.twitch.tv/{8}) |{19}
-    [{9}](https://www.twitch.tv/{9}) |{20}
+    [{0}](https://www.twitch.tv/{0}) |{10}
+    [{1}](https://www.twitch.tv/{1}) |{11}
+    [{2}](https://www.twitch.tv/{2}) |{12}
+    [{3}](https://www.twitch.tv/{3}) |{13}
+    [{4}](https://www.twitch.tv/{4}) |{14}
+    [{5}](https://www.twitch.tv/{5}) |{15}
+    [{6}](https://www.twitch.tv/{6}) |{16}
+    [{7}](https://www.twitch.tv/{7}) |{17}
+    [{8}](https://www.twitch.tv/{8}) |{18}
+    [{9}](https://www.twitch.tv/{9}) |{19}
     '''
 
 def fetch_names():
