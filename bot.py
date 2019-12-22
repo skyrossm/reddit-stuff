@@ -79,12 +79,10 @@ def clipinfo(clip_url):
     json = r.json()
     broadcaster_url = json["broadcaster"]["channel_url"]
     title_clip = json["title"]
-    if 'vod' in json:
-        if 'url' in json['vod']:
-                vod_link = '[Continue watching](' + json["vod"]["url"] + ')'
-        else:
-            vod_link = ''
-    else:
+    try:
+         vod_link = '[Continue watching](' + json["vod"]["url"] + ')'
+    except KeyError:
+        print("No vod link")
         vod_link = ''
 
 
