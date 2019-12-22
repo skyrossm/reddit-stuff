@@ -5,7 +5,6 @@ import praw
 import requests
 from retrying import retry
 import raven
-from systemd import journal
 
 client = raven.Client(
     dsn='',
@@ -31,7 +30,6 @@ def main():
     global cur
     global sql
     sql = sqlite3.connect('replyposts.db')
-    journal.send('loaded SQL database', SYSLOG_IDENTIFIER='reddit-bot' )
     print('Loaded SQL Database')
     cur = sql.cursor()
 
@@ -43,7 +41,6 @@ def main():
     sql.commit()
     
     print('logging in....')
-    journal.send('logging in', SYSLOG_IDENTIFIER='reddit-bot' )
     reddit = praw.Reddit(client_id=os.environ['REDDIT_CLIENTID'],
                          client_secret=os.environ['REDDIT_CLIENTSECRET'],
                          password=os.environ['REDDIT_PASSWORD'],
@@ -51,7 +48,6 @@ def main():
                          username=os.environ['REDDIT_USERNAME'])
 
     print('retreiving subreddit....')
-    journal.send('retreiving subreddit', SYSLOG_IDENTIFIER='reddit-bot' )
     subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
     for submission in subreddit.stream.submissions():
         process_submission(submission)
@@ -102,7 +98,6 @@ def process_submission(submission):
             cur.execute('INSERT INTO oldsubmissions VALUES(?)', [sid])
             sql.commit()
             print('Added id {0} to database'.format(sid))
-            journal.send('added id {0} to database', SYSLOG_IDENTIFIER='reddit-bot'.format(sid))
             #not really needed
             time.sleep(600)
     else:
