@@ -57,13 +57,31 @@ def fetch_names():
 
     #get id's from users that have certain words in their title
     #words = 'rp', 'nopixel'
-    names = [x['channel']['display_name'] for x in data['streams'] if any(s in x['channel'].get('status', '').lower() for s in ['nopixel', 'rp', 'roleplay', 'family', 'No Pixel']) and x['broadcast_platform']=='live']
+    wordList = ['nopixel', 'rp', 'roleplay', 'family', 'No Pixel', 'dasMEHDI']
+    names = [x['channel']['display_name'] for x in data['streams'] if any(s in x['channel'].get('status', '').lower() for s in wordList) and x['broadcast_platform']=='live']
     print(names)
 
 
     #gets the viewercounts of the people that certain words in their title
-    viewer_count = [x['viewers'] for x in data['streams'] if any(s in x['channel'].get('status', '').lower() for s in ['nopixel', 'rp', 'roleplay', 'family', 'No Pixel']) and x['broadcast_platform']=='live']
+    viewer_count = [x['viewers'] for x in data['streams'] if any(s in x['channel'].get('status', '').lower() for s in wordList) and x['broadcast_platform']=='live']
     print(viewer_count)
+
+    #template = '[{0}](https://www.twitch.tv/{0}) |{10}'
+    #[{1}](https://www.twitch.tv/{1}) |{11}
+    #[{2}](https://www.twitch.tv/{2}) |{12}
+    #[{3}](https://www.twitch.tv/{3}) |{13}
+    #[{4}](https://www.twitch.tv/{4}) |{14}
+    #[{5}](https://www.twitch.tv/{5}) |{15}
+    #[{6}](https://www.twitch.tv/{6}) |{16}
+    #[{7}](https://www.twitch.tv/{7}) |{17}
+    #[{8}](https://www.twitch.tv/{8}) |{18}
+    #[{9}](https://www.twitch.tv/{9}) |{19}
+
+    #count = 0
+    #for i in ar:
+    #    if (count < 10)
+    #        count++
+       
     return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], names[9], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8], viewer_count[9])
 
 
