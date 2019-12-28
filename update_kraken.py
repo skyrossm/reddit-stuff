@@ -57,8 +57,12 @@ def fetch_names():
 
     #get id's from users that have certain words in their title
     #words = 'rp', 'nopixel'
-    wordList = ['nopixel', 'rp', 'roleplay', 'family', 'No Pixel', 'dasMEHDI']
-    names = [x['channel']['display_name'] for x in data['streams'] if any(s in x['channel'].get('status', '').lower() for s in wordList) and x['broadcast_platform']=='live']
+    wordList = ['nopixel', 'rp', 'roleplay', 'family', 'No Pixel']
+
+    #backup for streamers with stupid titles
+    streamerList = ['dasMEHDI']
+
+    names = [x['channel']['display_name'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or (x['channel'].get('display_name', '').lower() for s in streamerList)) and x['broadcast_platform']=='live']
     print(names)
 
 
