@@ -120,7 +120,7 @@ def fetch_names():
     print(newlist)
     
     random_stream = random.choice(newlist)
-    sidebartemplate = sidebartemplate.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
+    sidebartemplate = oldsidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
     return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
 
 
