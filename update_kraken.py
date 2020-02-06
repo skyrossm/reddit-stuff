@@ -85,10 +85,10 @@ def fetch_names():
 
     #get id's from users that have certain words in their title
     #words = 'rp', 'nopixel'
-    wordList = ['nopixel', 'rp', 'roleplay', 'family', 'No Pixel']
+    wordList = ['nopixel', 'rp', 'roleplay', 'family', 'no pixel']
 
     #backup for streamers with stupid titles
-    streamerList = ['dasMEHDI']
+    streamerList = ['dasMEHDI', 'koil']
 
     names = [x['channel']['display_name'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or (x['channel'].get('display_name', '').lower() for s in streamerList)) and x['broadcast_platform']=='live']
     print(names)
@@ -114,11 +114,10 @@ def fetch_names():
     #    if (count < 10)
     #        count++
     
-    n = 8
-    newlist = names[n:]
+    newlist = sorted(i for i in viewer_count if i <= 250)
     print(newlist)
     
-    random_stream = random.choice(newlist)
+    random_stream = names[random.choice(range(len(newlist)))]
     
     global sidebartemplate
     
