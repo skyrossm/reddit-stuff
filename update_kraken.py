@@ -71,7 +71,7 @@ Streamer | Viewer Count
 -------------------------------------------------------------
 '''
 
-sidebartemplate = ''' To be updated '''
+global sidebartemplate = ''' To be updated '''
 
 def fetch_names():
     #payload for api request
