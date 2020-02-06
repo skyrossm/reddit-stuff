@@ -42,6 +42,8 @@ sidebar = '''
     [{7}](https://www.twitch.tv/{7}) |{17}
     [{8}](https://www.twitch.tv/{8}) |{18}
     [{9}](https://www.twitch.tv/{9}) |{19}
+    ---|---
+    [View All NoPixel Streamers](https://nopixel.hasroot.com/)
     '''
 
 def fetch_names():
@@ -102,6 +104,20 @@ def get_name(ids):
 #get_name(ids)
 
 
+print("Beep boop!")
+
+reply_template = '''
+[MIRROR: {0}](https://streamable.com/{1})
+
+
+Credit to {2} for the content.
+
+{3}
+
+-----------------------------
+^(I am a bot. Beep Boop)
+''' 
+
 def update_sidebar(updateText):
     custom = None
     widgets = subreddit.widgets
@@ -111,9 +127,71 @@ def update_sidebar(updateText):
                 custom = widget
                 break
     custom.mod.update(text=updateText)
+ 
+def streamable(clip_url, submission):
+    api_url = 'https://api.streamable.com/import'
+    payload = {'url': clip_url}
+    headers = {'User-Agent': 'A bot that creates mirrors of Twitch clips'}
+    global shortcode
+    r = requests.get(api_url, params=payload, auth=(os.environ['STREAMABLE_USER'], os.environ['STREAMABLE_PW']), headers=headers)
+    print(r.status_code)
+    if r.status_code == 200:
+        json = r.json()
+        shortcode = json['shortcode']
+        clipinfo(clip_url)
+        reply_text = reply_template.format(title_clip, shortcode, broadcaster_url, vod_link)
+        reply = submission.reply(reply_text)
+        reply.mod.distinguish(sticky=True)
+    else:
+        pass
+
+def clipinfo(clip_url):
+    global broadcaster_url
+    global title_clip
+    global vod_link
+    headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': os.environ['TWITCH_CLIENTID']}
+    if clip_url.startswith('https://clips.twitch.tv'):
+        url_end = clip_url[24:]
+        print(url_end)
+    else:
+        pass
+    api_url = 'https://api.twitch.tv/kraken/clips/{0}'.format(url_end)
+    r = requests.get(api_url, headers=headers)
+    json = r.json()
+    broadcaster_url = json["broadcaster"]["channel_url"]
+    title_clip = json["title"]
+    try:
+         vod_link = '[Continue watching](' + json["vod"]["url"] + ')'
+    except TypeError:
+        print("No vod link")
+        vod_link = ''
 
 
+
+def process_submission(submission):
+    clip_url = submission.url
+    sid = submission.id
+    if not submission.archived:
+        if clip_url.startswith('https://clips.twitch.tv'):
+            streamable(clip_url, submission)
+        elif re.match('https://www.twitch.tv/.*/clip/.*', clip_url):
+            new_url = 'https://clips.twitch.tv/' + clip_url.split("clip/")[1]
+            print("Fixed broken twitch url");
+            #Could also configure to auto remove post
+            streamable(new_url, submission)
+        print('Replied to {0}'.format(sid))
+         #prevent rate limiting (>1 request per second)
+        time.sleep(5)
+    else:
+        pass
+
+submission_stream = subreddit.stream.submissions(pause_after=-1, skip_existing=True)
 while True:
+    for submission in submission_stream:
+        if submission is None:
+            break
+        print(submission.title)
+        process_submission(submission)
     update_sidebar(fetch_names())
     print("Updated widget")
     time.sleep(300)
