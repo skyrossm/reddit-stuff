@@ -166,6 +166,7 @@ def streamable(clip_url, submission):
         reply_text = reply_template.format(title_clip, shortcode, broadcaster_url, vod_link)
         reply = submission.reply(reply_text)
         reply.mod.distinguish(sticky=True)
+        reply.mod.lock()
     else:
         pass
 
