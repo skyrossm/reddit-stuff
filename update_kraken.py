@@ -116,8 +116,9 @@ def fetch_names():
     
     newlist = sorted(i for i in viewer_count if i <= 250)
     print(newlist)
-    
-    random_stream = names[random.choice(range(len(newlist)))]
+    ran = random.choice(range(len(newlist)));
+    newindex = viewer_count.index(ran);
+    random_stream = names[newindex]
     
     global sidebartemplate
     
