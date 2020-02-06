@@ -4,6 +4,7 @@ import raven
 import praw
 import re
 import time
+import random
 from datetime import datetime
 import os
 
@@ -41,10 +42,36 @@ sidebar = '''
     [{6}](https://www.twitch.tv/{6}) |{16}
     [{7}](https://www.twitch.tv/{7}) |{17}
     [{8}](https://www.twitch.tv/{8}) |{18}
-    [{9}](https://www.twitch.tv/{9}) |{19}
-    ---|---
-    [View All NoPixel Streamers](https://nopixel.hasroot.com/)
+    **Random Streamer:** |[{9}](https://www.twitch.tv/{9})
     '''
+oldsidebar = '''
+[](https://discord.gg/bkVuuXF)
+
+--------------------------------
+
+**[CLICK HERE FOR RULES](https://www.reddit.com/r/RPClipsGTA/wiki/subreddit/rules)**
+---
+
+-------------------------------------------------------------
+**Top GTA RP Streamers live**
+---
+Streamer | Viewer Count
+    ---|---
+    [{0}](https://www.twitch.tv/{0}) |{10}
+    [{1}](https://www.twitch.tv/{1}) |{11}
+    [{2}](https://www.twitch.tv/{2}) |{12}
+    [{3}](https://www.twitch.tv/{3}) |{13}
+    [{4}](https://www.twitch.tv/{4}) |{14}
+    [{5}](https://www.twitch.tv/{5}) |{15}
+    [{6}](https://www.twitch.tv/{6}) |{16}
+    [{7}](https://www.twitch.tv/{7}) |{17}
+    [{8}](https://www.twitch.tv/{8}) |{18}
+    **Random Streamer:** |[{9}](https://www.twitch.tv/{9})
+
+-------------------------------------------------------------
+'''
+
+sidebartemplate = ''' To be updated '''
 
 def fetch_names():
     #payload for api request
@@ -87,8 +114,14 @@ def fetch_names():
     #for i in ar:
     #    if (count < 10)
     #        count++
-       
-    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], names[9], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8], viewer_count[9])
+    
+    n = 8
+    newlist = names[n:]
+    print newlist
+    
+    random_stream = random.choice(newlist)
+    sidebartemplate = sidebartemplate.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
+    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
 
 
 def get_name(ids):
@@ -127,6 +160,8 @@ def update_sidebar(updateText):
                 custom = widget
                 break
     custom.mod.update(text=updateText)
+    sidebar_contents = settings['description']
+    subreddit.mod.update(description=sidebartemplate)
  
 def streamable(clip_url, submission):
     api_url = 'https://api.streamable.com/import'
