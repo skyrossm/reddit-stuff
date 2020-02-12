@@ -14,7 +14,7 @@ client = raven.Client(
     include_paths=[__name__.split('.', 1)[0]],
 )
 
-api_url = 'https://api.twitch.tv/kraken/streams'
+api_url = 'https://api.twitch.tv/kraken/streams?limit=70'
 headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': os.environ['TWITCH_CLIENTID']}
 
 #login to reddit.
