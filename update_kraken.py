@@ -88,7 +88,7 @@ def fetch_names():
     wordList = ['nopixel', 'rp', 'roleplay', 'family', 'no pixel']
 
     #backup for streamers with stupid titles
-    streamerList = ['dasMEHDI', 'koil']
+    streamerList = ['dasMEHDI', 'koil', 's0upes', 'NewFaceSuper', 'AfriicanSnowball', 'mantisobagan', 'Madmoiselle', 'Viviana', 'JoeSmitty123', 'Xaphgnok', 'JdotField', 'the_halfhand', 'Choi', 'Armeeof1', 'NotoriousNorman', 'Jayce', 'kfruntrfrunt', 'YoinksOG', 'aXed_U', 'xReklez', 'MasterMisuri', 'Coolio']
 
     names = [x['channel']['display_name'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(x['channel'].get('display_name', '').lower() for s in streamerList)) and x['broadcast_platform']=='live']
     print(names)
