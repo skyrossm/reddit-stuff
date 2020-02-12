@@ -120,7 +120,7 @@ def fetch_names():
     if len(newlist) != 0:
         ran = random.choice(newlist)
     else:
-        ran = newList[-1]
+        ran = viewer_count[-1]
     newindex = viewer_count.index(ran)
     random_stream = names[newindex]
     
