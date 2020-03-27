@@ -165,7 +165,7 @@ def streamable(clip_url, submission):
     if r.status_code == 200:
         json = r.json()
         shortcode = json['shortcode']
-        clipinfo(clip_url)
+        clipinfo(clip_url, submission)
         reply_text = reply_template.format(title_clip, shortcode, broadcaster_url, vod_link)
         reply = submission.reply(reply_text)
         reply.mod.distinguish(sticky=True)
@@ -174,7 +174,7 @@ def streamable(clip_url, submission):
         print("Error posting streamable clip")
         pass
 
-def clipinfo(clip_url):
+def clipinfo(clip_url, submission):
     global broadcaster_url
     global title_clip
     global vod_link
@@ -188,6 +188,7 @@ def clipinfo(clip_url):
     r = requests.get(api_url, headers=headers)
     json = r.json()
     broadcaster_url = json["broadcaster"]["channel_url"]
+    submission.set_flair(json["broadcaster"]["display_name"], 'clip')
     title_clip = json["title"]
     try:
          vod_link = '[Continue watching](' + json["vod"]["url"] + ')'
