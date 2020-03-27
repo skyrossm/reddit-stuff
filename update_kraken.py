@@ -171,6 +171,8 @@ def streamable(clip_url, submission):
         reply.mod.distinguish(sticky=True)
         reply.mod.lock()
     else:
+        print("Streamable returned code:")
+        print(r.status_code)
         pass
 
 def clipinfo(clip_url):
@@ -217,6 +219,7 @@ submission_stream = subreddit.stream.submissions(pause_after=-1, skip_existing=T
 while True:
     for submission in submission_stream:
         if submission is None:
+            print("No new submissions")
             break
         print(submission.title)
         process_submission(submission)
