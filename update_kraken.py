@@ -171,8 +171,10 @@ def streamable(clip_url, submission):
         reply.mod.distinguish(sticky=True)
         reply.mod.lock()
     else:
-        print("Streamable returned code:")
-        print(r.status_code)
+        json = r.json()
+        shortcode = json['shortcode']
+        reply_text = reply_template.format(title_clip, shortcode, broadcaster_url, vod_link)
+        print(reply_text)
         pass
 
 def clipinfo(clip_url):
