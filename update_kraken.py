@@ -188,7 +188,10 @@ def clipinfo(clip_url, submission):
     r = requests.get(api_url, headers=headers)
     json = r.json()
     broadcaster_url = json["broadcaster"]["channel_url"]
-    submission.set_flair(json["broadcaster"]["display_name"], 'clip')
+    choices = submission.flair.choices()
+    template_id = next(x for x in choices
+        if x['flair_text_editable'])['flair_template_id']
+    submission.flair.select(template_id, json["broadcaster"]["display_name"])
     title_clip = json["title"]
     try:
          vod_link = '[Continue watching](' + json["vod"]["url"] + ')'
