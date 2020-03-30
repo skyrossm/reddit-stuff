@@ -182,6 +182,9 @@ def clipinfo(clip_url, submission):
     if clip_url.startswith('https://clips.twitch.tv'):
         url_end = clip_url[24:]
         print(url_end)
+    elif clip_url.startsWith('http://clips.twitch.tv'):
+        url_end = clip_url[23:]
+        print(url_end)
     else:
         pass
     api_url = 'https://api.twitch.tv/kraken/clips/{0}'.format(url_end)
@@ -206,6 +209,8 @@ def process_submission(submission):
     sid = submission.id
     if not submission.archived:
         if clip_url.startswith('https://clips.twitch.tv'):
+            streamable(clip_url, submission)
+        elif clip_url.startsWith('http://clips.twitch.tv'):
             streamable(clip_url, submission)
         elif re.match('https://www.twitch.tv/.*/clip/.*', clip_url):
             new_url = 'https://clips.twitch.tv/' + clip_url.split("clip/")[1]
