@@ -33,15 +33,15 @@ settings = subreddit.mod.settings()
 sidebar = '''
     Streamer | Viewer Count
     ---|---
-    [{0}](https://www.twitch.tv/{0}) |{10}
-    [{1}](https://www.twitch.tv/{1}) |{11}
-    [{2}](https://www.twitch.tv/{2}) |{12}
-    [{3}](https://www.twitch.tv/{3}) |{13}
-    [{4}](https://www.twitch.tv/{4}) |{14}
-    [{5}](https://www.twitch.tv/{5}) |{15}
-    [{6}](https://www.twitch.tv/{6}) |{16}
-    [{7}](https://www.twitch.tv/{7}) |{17}
-    [{8}](https://www.twitch.tv/{8}) |{18}
+    [{0}](https://www.twitch.tv/{0}) |{9}
+    [{1}](https://www.twitch.tv/{1}) |{10}
+    [{2}](https://www.twitch.tv/{2}) |{11}
+    [{3}](https://www.twitch.tv/{3}) |{12}
+    [{4}](https://www.twitch.tv/{4}) |{13}
+    [{5}](https://www.twitch.tv/{5}) |{14}
+    [{6}](https://www.twitch.tv/{6}) |{15}
+    [{7}](https://www.twitch.tv/{7}) |{16}
+    [{8}](https://www.twitch.tv/{8}) |{17}
     **our king:** |[ImmortalHD](https://www.twitch.tv/immortalhd)
     '''
 oldsidebar = '''
@@ -57,15 +57,15 @@ oldsidebar = '''
 ---
 Streamer | Viewer Count
     ---|---
-    [{0}](https://www.twitch.tv/{0}) |{10}
-    [{1}](https://www.twitch.tv/{1}) |{11}
-    [{2}](https://www.twitch.tv/{2}) |{12}
-    [{3}](https://www.twitch.tv/{3}) |{13}
-    [{4}](https://www.twitch.tv/{4}) |{14}
-    [{5}](https://www.twitch.tv/{5}) |{15}
-    [{6}](https://www.twitch.tv/{6}) |{16}
-    [{7}](https://www.twitch.tv/{7}) |{17}
-    [{8}](https://www.twitch.tv/{8}) |{18}
+    [{0}](https://www.twitch.tv/{0}) |{9}
+    [{1}](https://www.twitch.tv/{1}) |{10}
+    [{2}](https://www.twitch.tv/{2}) |{11}
+    [{3}](https://www.twitch.tv/{3}) |{12}
+    [{4}](https://www.twitch.tv/{4}) |{13}
+    [{5}](https://www.twitch.tv/{5}) |{14}
+    [{6}](https://www.twitch.tv/{6}) |{15}
+    [{7}](https://www.twitch.tv/{7}) |{16}
+    [{8}](https://www.twitch.tv/{8}) |{17}
     **our king:** |[ImmortalHD](https://www.twitch.tv/immortalhd)
 
 -------------------------------------------------------------
@@ -96,18 +96,8 @@ def fetch_names():
     viewer_count = [x['viewers'] for x in data['streams'] if (any(x['channel'].get('display_name', '').lower() for s in pdStreamers)) and x['broadcast_platform']=='live']
     print(viewer_count)
 
-    
-    newlist = sorted(i for i in viewer_count if i <= 250)
-    print(newlist)
-    if len(newlist) != 0:
-        ran = random.choice(newlist)
-    else:
-        ran = viewer_count[-1]
-    newindex = viewer_count.index(ran)
-    random_stream = names[newindex]
-    
     global sidebartemplate
-    
+
     sidebartemplate = oldsidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
     return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
 
@@ -124,7 +114,7 @@ Credit to {2} for the content.
 
 -----------------------------
 ^(I am a bot. Beep Boop)
-''' 
+'''
 
 def update_sidebar(updateText):
     custom = None
@@ -137,7 +127,7 @@ def update_sidebar(updateText):
     custom.mod.update(text=updateText)
     sidebar_contents = settings['description']
     subreddit.mod.update(description=sidebartemplate)
- 
+
 def streamable(clip_url, submission):
     api_url = 'https://api.streamable.com/import'
     payload = {'url': clip_url}
