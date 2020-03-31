@@ -95,8 +95,7 @@ def fetch_names():
     #gets the viewercounts of the people that certain words in their title
     viewer_count = [x['viewers'] for x in data['streams'] if (x['channel'].get('display_name', '').lower() in pdStreamers) and x['broadcast_platform']=='live']
     print(viewer_count)
-    array_length = len(names)
-    for i in range(array_length):
+    for i in range(10):
         try:
             gotdata = names[i]
         except IndexError:
