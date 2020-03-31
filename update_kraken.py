@@ -99,8 +99,8 @@ def fetch_names():
         try:
             gotdata = names[i]
         except IndexError:
-            gotdata = ' '
-            viewer_count[i] = '0'
+            names.append(' ')
+            viewer_count.append(0)
 
 
     global sidebartemplate
