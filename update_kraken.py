@@ -42,7 +42,7 @@ sidebar = '''
     [{6}](https://www.twitch.tv/{6}) |{16}
     [{7}](https://www.twitch.tv/{7}) |{17}
     [{8}](https://www.twitch.tv/{8}) |{18}
-    **Random Streamer:** |[{9}](https://www.twitch.tv/{9})
+    **our king:** |[ImmortalHD](https://www.twitch.tv/immortalhd)
     '''
 oldsidebar = '''
 [](https://discord.gg/bkVuuXF)
@@ -53,7 +53,7 @@ oldsidebar = '''
 ---
 
 -------------------------------------------------------------
-**Top GTA RP Streamers live**
+**Top NoPixel PD Streamers live**
 ---
 Streamer | Viewer Count
     ---|---
@@ -66,7 +66,7 @@ Streamer | Viewer Count
     [{6}](https://www.twitch.tv/{6}) |{16}
     [{7}](https://www.twitch.tv/{7}) |{17}
     [{8}](https://www.twitch.tv/{8}) |{18}
-    **Random Streamer:** |[{9}](https://www.twitch.tv/{9})
+    **our king:** |[ImmortalHD](https://www.twitch.tv/immortalhd)
 
 -------------------------------------------------------------
 '''
@@ -87,33 +87,15 @@ def fetch_names():
     #words = 'rp', 'nopixel'
     wordList = ['nopixel', 'rp', 'roleplay', 'family', 'no pixel']
 
-    #backup for streamers with stupid titles
-    streamerList = ['dasMEHDI', 'koil', 's0upes', 'NewFaceSuper', 'AfriicanSnowball', 'mantisobagan', 'Madmoiselle', 'Viviana', 'JoeSmitty123', 'Xaphgnok', 'JdotField', 'the_halfhand', 'Choi', 'Armeeof1', 'NotoriousNorman', 'Jayce', 'kfruntrfrunt', 'YoinksOG', 'aXed_U', 'xReklez', 'MasterMisuri', 'Coolio']
+    pdStreamers = ['ramee', 'ratedepicz', 'kiwo', 'koil', 'five0antho', 'hirona', 'uhsnow', 'confuseddevil', 'dogbert', 'mexi024', 'curvyelephant', 'fortyone', 'lewolfy', 'kinamazing', 'pengwin', 'hiredgunrp', 'ziggy', 'novalokhd', 'tezmate', 'shindur', 'hotted89', 'elv15', 'nikkisariot', 'mikezout14', 'honathantv', 'tfneraze', 'rose', 'ray308win', 'pons', 'kyle', 'callmegrub', '80bsaget', 'sock22', 'xiceman', 'gamedemented', 'immortalhd', 'vaerinis', 'ratedepicz', 'kyliebitkin', 'owenseven', 'lt_raven', 'curtisryan', 'mattrp', 'stoned_minded', 'officialwhitey', 'primal', 'timmac', 'slasher2099', 'acaibear', 'pmsproxy', 'ssaab', 'joesmitty123', 'miggitymaan', 'og_tyger', 'generalemu', 'minusfive', 'mantistogbagan', 'heyorbz', 'aus24', 'dasmehdi', 'nikez', 'joblessgarret']
 
-    names = [x['channel']['display_name'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(x['channel'].get('display_name', '').lower() for s in streamerList)) and x['broadcast_platform']=='live']
+    names = [x['channel']['display_name'] for x in data['streams'] if (any(x['channel'].get('display_name', '').lower() for s in pdStreamers)) and x['broadcast_platform']=='live']
     print(names)
 
-
     #gets the viewercounts of the people that certain words in their title
-    viewer_count = [x['viewers'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(x['channel'].get('display_name', '').lower() for s in streamerList)) and x['broadcast_platform']=='live']
-   
+    viewer_count = [x['viewers'] for x in data['streams'] if (any(x['channel'].get('display_name', '').lower() for s in pdStreamers)) and x['broadcast_platform']=='live']
     print(viewer_count)
 
-    #template = '[{0}](https://www.twitch.tv/{0}) |{10}'
-    #[{1}](https://www.twitch.tv/{1}) |{11}
-    #[{2}](https://www.twitch.tv/{2}) |{12}
-    #[{3}](https://www.twitch.tv/{3}) |{13}
-    #[{4}](https://www.twitch.tv/{4}) |{14}
-    #[{5}](https://www.twitch.tv/{5}) |{15}
-    #[{6}](https://www.twitch.tv/{6}) |{16}
-    #[{7}](https://www.twitch.tv/{7}) |{17}
-    #[{8}](https://www.twitch.tv/{8}) |{18}
-    #[{9}](https://www.twitch.tv/{9}) |{19}
-
-    #count = 0
-    #for i in ar:
-    #    if (count < 10)
-    #        count++
     
     newlist = sorted(i for i in viewer_count if i <= 250)
     print(newlist)
@@ -126,8 +108,9 @@ def fetch_names():
     
     global sidebartemplate
     
-    sidebartemplate = oldsidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
-    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
+    sidebartemplate = oldsidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
+    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
+
 
 print("Beep boop!")
 
@@ -165,15 +148,16 @@ def streamable(clip_url, submission):
     if r.status_code == 200:
         json = r.json()
         shortcode = json['shortcode']
-        clipinfo(clip_url)
+        clipinfo(clip_url, submission)
         reply_text = reply_template.format(title_clip, shortcode, broadcaster_url, vod_link)
         reply = submission.reply(reply_text)
         reply.mod.distinguish(sticky=True)
         reply.mod.lock()
     else:
+        print("Error posting streamable clip")
         pass
 
-def clipinfo(clip_url):
+def clipinfo(clip_url, submission):
     global broadcaster_url
     global title_clip
     global vod_link
@@ -181,12 +165,19 @@ def clipinfo(clip_url):
     if clip_url.startswith('https://clips.twitch.tv'):
         url_end = clip_url[24:]
         print(url_end)
+    elif clip_url.startswith('http://clips.twitch.tv'):
+        url_end = clip_url[23:]
+        print(url_end)
     else:
         pass
     api_url = 'https://api.twitch.tv/kraken/clips/{0}'.format(url_end)
     r = requests.get(api_url, headers=headers)
     json = r.json()
     broadcaster_url = json["broadcaster"]["channel_url"]
+    choices = submission.flair.choices()
+    template_id = next(x for x in choices
+        if x['flair_text_editable'])['flair_template_id']
+    submission.flair.select(template_id, json["broadcaster"]["display_name"])
     title_clip = json["title"]
     try:
          vod_link = '[Continue watching](' + json["vod"]["url"] + ')'
@@ -201,6 +192,8 @@ def process_submission(submission):
     sid = submission.id
     if not submission.archived:
         if clip_url.startswith('https://clips.twitch.tv'):
+            streamable(clip_url, submission)
+        elif clip_url.startswith('http://clips.twitch.tv'):
             streamable(clip_url, submission)
         elif re.match('https://www.twitch.tv/.*/clip/.*', clip_url):
             new_url = 'https://clips.twitch.tv/' + clip_url.split("clip/")[1]
@@ -217,12 +210,11 @@ submission_stream = subreddit.stream.submissions(pause_after=-1, skip_existing=T
 while True:
     for submission in submission_stream:
         if submission is None:
+            print("No new submissions")
             break
         print(submission.title)
         process_submission(submission)
     update_sidebar(fetch_names())
     print("Updated widget")
     time.sleep(300)
-
-    
 
