@@ -14,7 +14,7 @@ client = raven.Client(
     include_paths=[__name__.split('.', 1)[0]],
 )
 
-api_url = 'https://api.twitch.tv/kraken/streams?limit=70'
+api_url = 'https://api.twitch.tv/kraken/streams?limit=150'
 headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': os.environ['TWITCH_CLIENTID']}
 
 #login to reddit.
@@ -31,7 +31,7 @@ subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
 settings = subreddit.mod.settings()
 
 sidebar = '''
-    Streamer | Viewer Count
+    PD Streamer | Arrest Count
     ---|---
     [{0}](https://www.twitch.tv/{0}) |{9}
     [{1}](https://www.twitch.tv/{1}) |{10}
@@ -55,7 +55,7 @@ oldsidebar = '''
 -------------------------------------------------------------
 **Top NoPixel PD Streamers live**
 ---
-Streamer | Viewer Count
+PD Streamer | Arrest Count
     ---|---
     [{0}](https://www.twitch.tv/{0}) |{9}
     [{1}](https://www.twitch.tv/{1}) |{10}
@@ -87,7 +87,7 @@ def fetch_names():
     #words = 'rp', 'nopixel'
     wordList = ['nopixel', 'rp', 'roleplay', 'family', 'no pixel']
 
-    pdStreamers = ['ramee', 'ratedepicz', 'kiwo', 'koil', 'five0antho', 'hirona', 'uhsnow', 'confuseddevil', 'dogbert', 'mexi024', 'curvyelephant', 'fortyone', 'lewolfy', 'kinamazing', 'pengwin', 'hiredgunrp', 'ziggy', 'novalokhd', 'tezmate', 'shindur', 'hotted89', 'elv15', 'nikkisariot', 'mikezout14', 'honathantv', 'tfneraze', 'rose', 'ray308win', 'pons', 'kyle', 'callmegrub', '80bsaget', 'sock22', 'xiceman', 'gamedemented', 'immortalhd', 'vaerinis', 'ratedepicz', 'kyliebitkin', 'owenseven', 'lt_raven', 'curtisryan', 'mattrp', 'stoned_minded', 'officialwhitey', 'primal', 'timmac', 'slasher2099', 'acaibear', 'pmsproxy', 'ssaab', 'joesmitty123', 'miggitymaan', 'og_tyger', 'generalemu', 'minusfive', 'mantistogbagan', 'heyorbz', 'aus24', 'dasmehdi', 'nikez', 'joblessgarret']
+    pdStreamers = ['zaquelle', 'ramee', 'ratedepicz', 'kiwo', 'koil', 'five0antho', 'hirona', 'uhsnow', 'confuseddevil', 'dogbert', 'mexi024', 'curvyelephant', 'fortyone', 'lewolfy', 'kinamazing', 'pengwin', 'hiredgunrp', 'ziggy', 'novalokhd', 'tezmate', 'shindur', 'hotted89', 'elv15', 'nikkisariot', 'mikezout14', 'honathantv', 'tfneraze', 'rose', 'ray308win', 'pons', 'kyle', 'callmegrub', '80bsaget', 'sock22', 'xiceman', 'gamedemented', 'immortalhd', 'vaerinis', 'ratedepicz', 'kyliebitkin', 'owenseven', 'lt_raven', 'curtisryan', 'mattrp', 'stoned_minded', 'officialwhitey', 'primal', 'timmac', 'slasher2099', 'acaibear', 'pmsproxy', 'ssaab', 'joesmitty123', 'miggitymaan', 'og_tyger', 'generalemu', 'minusfive', 'mantistogbagan', 'heyorbz', 'aus24', 'dasmehdi', 'nikez', 'joblessgarret']
 
     names = [x['channel']['display_name'] for x in data['streams'] if (x['channel'].get('display_name', '').lower() in pdStreamers) and x['broadcast_platform']=='live']
     print(names)
