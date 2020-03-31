@@ -95,13 +95,13 @@ def fetch_names():
     #gets the viewercounts of the people that certain words in their title
     viewer_count = [x['viewers'] for x in data['streams'] if (x['channel'].get('display_name', '').lower() in pdStreamers) and x['broadcast_platform']=='live']
     print(viewer_count)
-
-    for i in names:
+    array_length = len(names)
+    for i in range(array_length):
         try:
             gotdata = names[i]
         except IndexError:
             gotdata = ' '
-            viewer_count[i] = ' '
+            viewer_count[i] = '0'
 
 
     global sidebartemplate
