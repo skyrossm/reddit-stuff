@@ -89,11 +89,11 @@ def fetch_names():
 
     pdStreamers = ['ramee', 'ratedepicz', 'kiwo', 'koil', 'five0antho', 'hirona', 'uhsnow', 'confuseddevil', 'dogbert', 'mexi024', 'curvyelephant', 'fortyone', 'lewolfy', 'kinamazing', 'pengwin', 'hiredgunrp', 'ziggy', 'novalokhd', 'tezmate', 'shindur', 'hotted89', 'elv15', 'nikkisariot', 'mikezout14', 'honathantv', 'tfneraze', 'rose', 'ray308win', 'pons', 'kyle', 'callmegrub', '80bsaget', 'sock22', 'xiceman', 'gamedemented', 'immortalhd', 'vaerinis', 'ratedepicz', 'kyliebitkin', 'owenseven', 'lt_raven', 'curtisryan', 'mattrp', 'stoned_minded', 'officialwhitey', 'primal', 'timmac', 'slasher2099', 'acaibear', 'pmsproxy', 'ssaab', 'joesmitty123', 'miggitymaan', 'og_tyger', 'generalemu', 'minusfive', 'mantistogbagan', 'heyorbz', 'aus24', 'dasmehdi', 'nikez', 'joblessgarret']
 
-    names = [x['channel']['display_name'] for x in data['streams'] if (any(x['channel'].get('display_name', '').lower() for s in pdStreamers)) and x['broadcast_platform']=='live']
+    names = [x['channel']['display_name'] for x in data['streams'] if (x['channel'].get('display_name', '').lower() in pdStreamers) and x['broadcast_platform']=='live']
     print(names)
 
     #gets the viewercounts of the people that certain words in their title
-    viewer_count = [x['viewers'] for x in data['streams'] if (any(x['channel'].get('display_name', '').lower() for s in pdStreamers)) and x['broadcast_platform']=='live']
+    viewer_count = [x['viewers'] for x in data['streams'] if (x['channel'].get('display_name', '').lower() in pdStreamers) and x['broadcast_platform']=='live']
     print(viewer_count)
 
     global sidebartemplate
