@@ -229,7 +229,7 @@ for submission in subreddit.new(limit=200):
         removemsg = "Your comment has been removed for containing criminal related words. The subreddit is now a PD subreddit, please make all comments PD related."
         for comment in submission.comments.list():
             if str(comment.author).lower() == 'automoderator' and removemsg in comment.body:
-                comment.parent.mod.approve()
+                comment.parent().mod.approve()
                 comment.mod.remove()
 while True:
     for submission in submission_stream:
