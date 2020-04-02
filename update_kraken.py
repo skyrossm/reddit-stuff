@@ -14,7 +14,7 @@ client = raven.Client(
     include_paths=[__name__.split('.', 1)[0]],
 )
 
-api_url = 'https://api.twitch.tv/kraken/streams?limit=100'
+api_url = 'https://api.twitch.tv/kraken/streams?limit=70'
 headers = {'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': os.environ['TWITCH_CLIENTID']}
 
 #login to reddit.
@@ -31,18 +31,18 @@ subreddit = reddit.subreddit(os.environ['REDDIT_SUBREDDIT'])
 settings = subreddit.mod.settings()
 
 sidebar = '''
-    PD Streamer | Arrest Count
+    Streamer | Viewer Count
     ---|---
-    [{0}](https://www.twitch.tv/{0}) |{9}
-    [{1}](https://www.twitch.tv/{1}) |{10}
-    [{2}](https://www.twitch.tv/{2}) |{11}
-    [{3}](https://www.twitch.tv/{3}) |{12}
-    [{4}](https://www.twitch.tv/{4}) |{13}
-    [{5}](https://www.twitch.tv/{5}) |{14}
-    [{6}](https://www.twitch.tv/{6}) |{15}
-    [{7}](https://www.twitch.tv/{7}) |{16}
-    [{8}](https://www.twitch.tv/{8}) |{17}
-    **our king:** |[ImmortalHD](https://www.twitch.tv/immortalhd)
+    [{0}](https://www.twitch.tv/{0}) |{10}
+    [{1}](https://www.twitch.tv/{1}) |{11}
+    [{2}](https://www.twitch.tv/{2}) |{12}
+    [{3}](https://www.twitch.tv/{3}) |{13}
+    [{4}](https://www.twitch.tv/{4}) |{14}
+    [{5}](https://www.twitch.tv/{5}) |{15}
+    [{6}](https://www.twitch.tv/{6}) |{16}
+    [{7}](https://www.twitch.tv/{7}) |{17}
+    [{8}](https://www.twitch.tv/{8}) |{18}
+    **Random Streamer:** |[{9}](https://www.twitch.tv/{9})
     '''
 oldsidebar = '''
 [](https://discord.gg/bkVuuXF)
@@ -53,20 +53,20 @@ oldsidebar = '''
 ---
 
 -------------------------------------------------------------
-**Top NoPixel PD Streamers live**
+**Top GTA RP Streamers live**
 ---
-PD Streamer | Arrest Count
+Streamer | Viewer Count
     ---|---
-    [{0}](https://www.twitch.tv/{0}) |{9}
-    [{1}](https://www.twitch.tv/{1}) |{10}
-    [{2}](https://www.twitch.tv/{2}) |{11}
-    [{3}](https://www.twitch.tv/{3}) |{12}
-    [{4}](https://www.twitch.tv/{4}) |{13}
-    [{5}](https://www.twitch.tv/{5}) |{14}
-    [{6}](https://www.twitch.tv/{6}) |{15}
-    [{7}](https://www.twitch.tv/{7}) |{16}
-    [{8}](https://www.twitch.tv/{8}) |{17}
-    **our king:** |[ImmortalHD](https://www.twitch.tv/immortalhd)
+    [{0}](https://www.twitch.tv/{0}) |{10}
+    [{1}](https://www.twitch.tv/{1}) |{11}
+    [{2}](https://www.twitch.tv/{2}) |{12}
+    [{3}](https://www.twitch.tv/{3}) |{13}
+    [{4}](https://www.twitch.tv/{4}) |{14}
+    [{5}](https://www.twitch.tv/{5}) |{15}
+    [{6}](https://www.twitch.tv/{6}) |{16}
+    [{7}](https://www.twitch.tv/{7}) |{17}
+    [{8}](https://www.twitch.tv/{8}) |{18}
+    **Random Streamer:** |[{9}](https://www.twitch.tv/{9})
 
 -------------------------------------------------------------
 '''
@@ -87,27 +87,47 @@ def fetch_names():
     #words = 'rp', 'nopixel'
     wordList = ['nopixel', 'rp', 'roleplay', 'family', 'no pixel']
 
-    pdStreamers = ['zaquelle', 'ramee', 'ratedepicz', 'kiwo', 'koil', 'five0antho', 'hirona', 'uhsnow', 'confuseddevil', 'dogbert', 'mexi024', 'curvyelephant', 'fortyone', 'lewolfy', 'kinamazing', 'pengwin', 'hiredgunrp', 'ziggy', 'novalokhd', 'tezmate', 'shindur', 'hotted89', 'elv15', 'nikkisariot', 'mikezout14', 'honathantv', 'tfneraze', 'rose', 'ray308win', 'pons', 'kyle', 'callmegrub', '80bsaget', 'sock22', 'xiceman', 'gamedemented', 'immortalhd', 'vaerinis', 'ratedepicz', 'kyliebitkin', 'owenseven', 'lt_raven', 'curtisryan', 'mattrp', 'stoned_minded', 'officialwhitey', 'primal', 'timmac', 'slasher2099', 'acaibear', 'pmsproxy', 'ssaab', 'joesmitty123', 'miggitymaan', 'og_tyger', 'generalemu', 'minusfive', 'mantistogbagan', 'heyorbz', 'aus24', 'dasmehdi', 'nikez', 'joblessgarret']
+    #backup for streamers with stupid titles
+    streamerList = ['dasMEHDI', 'koil', 's0upes', 'NewFaceSuper', 'AfriicanSnowball', 'mantisobagan', 'Madmoiselle', 'Viviana', 'JoeSmitty123', 'Xaphgnok', 'JdotField', 'the_halfhand', 'Choi', 'Armeeof1', 'NotoriousNorman', 'Jayce', 'kfruntrfrunt', 'YoinksOG', 'aXed_U', 'xReklez', 'MasterMisuri', 'Coolio']
 
-    names = [x['channel']['display_name'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) and x['channel'].get('display_name', '').lower() in pdStreamers) and x['broadcast_platform']=='live']
+    names = [x['channel']['display_name'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(x['channel'].get('display_name', '').lower() for s in streamerList)) and x['broadcast_platform']=='live']
     print(names)
 
+
     #gets the viewercounts of the people that certain words in their title
-    viewer_count = [x['viewers'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) and x['channel'].get('display_name', '').lower() in pdStreamers) and x['broadcast_platform']=='live']
+    viewer_count = [x['viewers'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(x['channel'].get('display_name', '').lower() for s in streamerList)) and x['broadcast_platform']=='live']
+   
     print(viewer_count)
-    for i in range(10):
-        try:
-            gotdata = names[i]
-        except IndexError:
-            names.append(' ')
-            viewer_count.append(0)
 
+    #template = '[{0}](https://www.twitch.tv/{0}) |{10}'
+    #[{1}](https://www.twitch.tv/{1}) |{11}
+    #[{2}](https://www.twitch.tv/{2}) |{12}
+    #[{3}](https://www.twitch.tv/{3}) |{13}
+    #[{4}](https://www.twitch.tv/{4}) |{14}
+    #[{5}](https://www.twitch.tv/{5}) |{15}
+    #[{6}](https://www.twitch.tv/{6}) |{16}
+    #[{7}](https://www.twitch.tv/{7}) |{17}
+    #[{8}](https://www.twitch.tv/{8}) |{18}
+    #[{9}](https://www.twitch.tv/{9}) |{19}
 
+    #count = 0
+    #for i in ar:
+    #    if (count < 10)
+    #        count++
+    
+    newlist = sorted(i for i in viewer_count if i <= 250)
+    print(newlist)
+    if len(newlist) != 0:
+        ran = random.choice(newlist)
+    else:
+        ran = viewer_count[-1]
+    newindex = viewer_count.index(ran)
+    random_stream = names[newindex]
+    
     global sidebartemplate
-
-    sidebartemplate = oldsidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
-    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
-
+    
+    sidebartemplate = oldsidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
+    return sidebar.format(names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], random_stream, viewer_count[0], viewer_count[1], viewer_count[2], viewer_count[3], viewer_count[4], viewer_count[5], viewer_count[6], viewer_count[7],  viewer_count[8])
 
 print("Beep boop!")
 
@@ -121,7 +141,7 @@ Credit to {2} for the content.
 
 -----------------------------
 ^(I am a bot. Beep Boop)
-'''
+''' 
 
 def update_sidebar(updateText):
     custom = None
@@ -134,7 +154,7 @@ def update_sidebar(updateText):
     custom.mod.update(text=updateText)
     sidebar_contents = settings['description']
     subreddit.mod.update(description=sidebartemplate)
-
+ 
 def streamable(clip_url, submission):
     api_url = 'https://api.streamable.com/import'
     payload = {'url': clip_url}
@@ -204,6 +224,13 @@ def process_submission(submission):
         pass
 
 submission_stream = subreddit.stream.submissions(pause_after=-1, skip_existing=True)
+for submission in subreddit.new(limit=200):
+        submission.comments.replace_more(limit=None)
+        removemsg = "Your comment has been removed for containing criminal related words. The subreddit is now a PD subreddit, please make all comments PD related."
+        for comment in submission.comments.list():
+            if str(comment.author).lower() == 'automoderator' and removemsg in comment.body:
+                comment.parent.mod.approve()
+                comment.mod.remove()
 while True:
     for submission in submission_stream:
         if submission is None:
@@ -214,4 +241,6 @@ while True:
     update_sidebar(fetch_names())
     print("Updated widget")
     time.sleep(300)
+
+    
 
