@@ -71,6 +71,8 @@ Streamer | Viewer Count
 -------------------------------------------------------------
 '''
 
+def contains_word(s, w):
+    return (' ' + w + ' ') in (' ' + s + ' ')
 
 def fetch_names():
     #payload for api request
@@ -89,13 +91,12 @@ def fetch_names():
     #backup for streamers with stupid titles
     streamerList = ['dasMEHDI', 'koil', 's0upes', 'NewFaceSuper', 'AfriicanSnowball', 'mantisobagan', 'Madmoiselle', 'Viviana', 'JoeSmitty123', 'Xaphgnok', 'JdotField', 'the_halfhand', 'Choi', 'Armeeof1', 'NotoriousNorman', 'Jayce', 'kfruntrfrunt', 'YoinksOG', 'aXed_U', 'xReklez', 'MasterMisuri', 'Coolio']
 
-    names = [x['channel']['display_name'] for x in data['streams'] if ((s in x['channel'].get('status', '').lower() for s in wordList) or (x['channel'].get('display_name', '').lower() in streamerList)) and x['broadcast_platform']=='live']
+    names = [x['channel']['display_name'] for x in data['streams'] if ((contains_word(x['channel'].get('status', '').lower(), s) for s in wordList) or (x['channel'].get('display_name', '').lower() in streamerList)) and x['broadcast_platform']=='live']
     print(names)
 
 
     #gets the viewercounts of the people that certain words in their title
-    viewer_count = [x['viewers'] for x in data['streams'] if ((s in x['channel'].get('status', '').lower() for s in wordList) or (x['channel'].get('display_name', '').lower() in streamerList)) and x['broadcast_platform']=='live']
-
+    viewer_count = [x['viewers'] for x in data['streams'] if ((contains_word(x['channel'].get('status', '').lower(), s) for s in wordList) or (x['channel'].get('display_name', '').lower() in streamerList)) and x['broadcast_platform']=='live']
     print(viewer_count)
 
     #template = '[{0}](https://www.twitch.tv/{0}) |{10}'
