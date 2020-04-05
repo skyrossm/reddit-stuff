@@ -91,29 +91,14 @@ def fetch_names():
     #backup for streamers with stupid titles
     streamerList = ['dasMEHDI', 'koil', 's0upes', 'NewFaceSuper', 'AfriicanSnowball', 'mantisobagan', 'Madmoiselle', 'Viviana', 'JoeSmitty123', 'Xaphgnok', 'JdotField', 'the_halfhand', 'Choi', 'Armeeof1', 'NotoriousNorman', 'Jayce', 'kfruntrfrunt', 'YoinksOG', 'aXed_U', 'xReklez', 'MasterMisuri', 'Coolio']
 
-    names = [x['channel']['display_name'] for x in data['streams'] if ((contains_word(x['channel'].get('status', '').lower(), s) for s in wordList) or (x['channel'].get('display_name', '').lower() in streamerList)) and x['broadcast_platform']=='live']
+    names = [x['channel']['display_name'] for x in data['streams'] if (any(contains_word(x['channel'].get('status', '').lower(), s) for s in wordList) or any(x['channel'].get('display_name', '').lower() in streamerList)) and x['broadcast_platform']=='live']
     print(names)
 
 
     #gets the viewercounts of the people that certain words in their title
-    viewer_count = [x['viewers'] for x in data['streams'] if ((contains_word(x['channel'].get('status', '').lower(), s) for s in wordList) or (x['channel'].get('display_name', '').lower() in streamerList)) and x['broadcast_platform']=='live']
+    viewer_count = [x['viewers'] for x in data['streams'] if (any(contains_word(x['channel'].get('status', '').lower(), s) for s in wordList) or any(x['channel'].get('display_name', '').lower() in streamerList)) and x['broadcast_platform']=='live']
+    
     print(viewer_count)
-
-    #template = '[{0}](https://www.twitch.tv/{0}) |{10}'
-    #[{1}](https://www.twitch.tv/{1}) |{11}
-    #[{2}](https://www.twitch.tv/{2}) |{12}
-    #[{3}](https://www.twitch.tv/{3}) |{13}
-    #[{4}](https://www.twitch.tv/{4}) |{14}
-    #[{5}](https://www.twitch.tv/{5}) |{15}
-    #[{6}](https://www.twitch.tv/{6}) |{16}
-    #[{7}](https://www.twitch.tv/{7}) |{17}
-    #[{8}](https://www.twitch.tv/{8}) |{18}
-    #[{9}](https://www.twitch.tv/{9}) |{19}
-
-    #count = 0
-    #for i in ar:
-    #    if (count < 10)
-    #        count++
     
     newlist = sorted(i for i in viewer_count if i <= 250)
     print(newlist)
