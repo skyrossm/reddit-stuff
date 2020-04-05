@@ -99,6 +99,13 @@ def fetch_names():
     viewer_count = [x['viewers'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(u in x['channel'].get('display_name', '').lower() for u in streamerList)) and x['broadcast_platform']=='live']
     print(viewer_count)
     
+    for i in range(10):
+        try:
+            gotdata = names[i]
+        except IndexError:
+            names.append(' ')
+            viewer_count.append(0)
+    
     newlist = sorted(i for i in viewer_count if i <= 250)
     print(newlist)
     if len(newlist) != 0:
