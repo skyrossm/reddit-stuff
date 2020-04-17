@@ -83,7 +83,7 @@ def fetch_names():
 
     #JSON response
     data = r.json()
-    #print(data)
+    print(data)
     
     #words = 'rp', 'nopixel'
     wordList = ['nopixel', ' rp ', 'roleplay', ' family ', 'no pixel', ' np ', 'no-pixel', 'svrp', 'twitchrp', 'aftermathrp', 'aftermath']
