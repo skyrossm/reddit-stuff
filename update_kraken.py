@@ -217,7 +217,7 @@ def process_submission(submission):
 submission_stream = subreddit.stream.submissions(pause_after=-1)
 for submission in submission_stream:
     if submission is None:
-    print("No new submissions")
+        print("No new submissions")
         break
     print(submission.title)
     process_submission(submission)
