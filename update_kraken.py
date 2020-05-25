@@ -214,17 +214,16 @@ def process_submission(submission):
     else:
         pass
 
-submission_stream = subreddit.stream.submissions(pause_after=-1, skip_existing=True)
-while True:
-    for submission in submission_stream:
-        if submission is None:
-            print("No new submissions")
-            break
-        print(submission.title)
-        process_submission(submission)
-    update_sidebar(fetch_names())
-    print("Updated widget")
-    time.sleep(300)
+submission_stream = subreddit.stream.submissions(pause_after=-1)
+for submission in submission_stream:
+    if submission is None:
+    print("No new submissions")
+        break
+    print(submission.title)
+    process_submission(submission)
+update_sidebar(fetch_names())
+print("Updated widget")
+time.sleep(300)
 
     
 
