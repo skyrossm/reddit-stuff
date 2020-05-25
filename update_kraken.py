@@ -53,7 +53,7 @@ oldsidebar = '''
 ---
 
 -------------------------------------------------------------
-**Top GTA RDR2 Streamers live**
+**Top RDR2 Streamers live**
 ---
 Streamer | Viewer Count
     ---|---
