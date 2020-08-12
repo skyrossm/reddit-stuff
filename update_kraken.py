@@ -92,13 +92,14 @@ def fetch_names():
     streamerList = ['Spaceboy', 'JoblessGarrett', 'PENTA', 'RatedEpicz', 'summit1g', 'buddha', 'UberHaxorNova', 'Lord_Kebun', 'Ramee', 'dasMEHDI', 'koil', 's0upes', 'NewFaceSuper', 'AfriicanSnowball', 'mantisobagan', 'Madmoiselle', 'Viviana', 'JoeSmitty123', 'Xaphgnok', 'JdotField', 'the_halfhand', 'Choi', 'Armeeof1', 'NotoriousNorman', 'Jayce', 'kfruntrfrunt', 'YoinksOG', 'aXed_U', 'xReklez', 'MasterMisuri', 'Coolio']
     ignoreList = ['Vader']
     
-    names = [x['channel']['display_name'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(u in x['channel'].get('display_name', '') for u in streamerList)) and x['broadcast_platform']=='live'] and not any(u in x['channel'].get('display_name', '') for u in ignoreList)
+    names = [x['channel']['display_name'] 
+    for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(u in x['channel'].get('display_name', '') for u in streamerList))  and x['broadcast_platform']=='live' and not any(u in x['channel'].get('display_name', '') for u in ignoreList)] 
     print(names)
 
 
     #gets the viewercounts of the people that certain words in their title
-    viewer_count = [x['viewers'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(u in x['channel'].get('display_name', '') for u in streamerList)) and x['broadcast_platform']=='live'] and not any(u in x['channel'].get('display_name', '') for u in ignoreList)
-    print(viewer_count)
+    viewer_count = [x['viewers'] for x in data['streams'] if (any(s in x['channel'].get('status', '').lower() for s in wordList) or any(u in x['channel'].get('display_name', '') for u in streamerList)) and x['broadcast_platform']=='live'  and not any(u in x['channel'].get('display_name', '') for u in ignoreList)]
+    
     
     for i in range(10):
         try:
