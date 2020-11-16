@@ -45,7 +45,7 @@ sidebar = '''
     **Random Streamer:** |[{9}](https://www.twitch.tv/{9})
     '''
 oldsidebar = '''
-[](https://discord.gg/bkVuuXF)
+[](https://discord.gg/pbHERV6y87)
 
 --------------------------------
 
@@ -151,7 +151,7 @@ def update_sidebar(updateText):
 def streamable(clip_url, submission):
     api_url = 'https://api.streamable.com/import'
     payload = {'url': clip_url}
-    headers = {'User-Agent': 'A bot that creates mirrors of Twitch clips'}
+    headers = {'User-Agent': 'A bot that creates mirrors of clips'}
     global shortcode
     r = requests.get(api_url, params=payload, auth=(os.environ['STREAMABLE_USER'], os.environ['STREAMABLE_PW']), headers=headers)
     print(r.status_code)
